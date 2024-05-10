@@ -1,0 +1,15 @@
+[package]
+categories = ["functional", "higher-kinded types"]
+description = "Rust Higher-Kinded Types emulation."
+edition = "2021"
+keywords = ["functional", "higher-kinded types"]
+license = "MIT"
+name = "hkt"
+readme = "README.md"
+repository = "https://github.com/DiCaius/Tim.rs"
+version = "0.1.0"
+
+[dependencies]
+
+[lints]
+workspace = true
