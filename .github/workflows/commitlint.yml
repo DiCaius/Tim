@@ -1,0 +1,28 @@
+name: Commit Lint
+on:
+    pull_request:
+        types:
+            - opened
+            - reopened
+            - synchronize
+    push:
+        branches:
+            - release
+            - release-candidate
+jobs:
+    job:
+        name: Commit Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: GitHub Checkout
+              uses: actions/checkout@v4
+              with:
+                persist-credentials: false
+                submodules: recursive
+                token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Set-Up Cache
+              uses: Swatinem/rust-cache@v2
+            - name: Check Commit Format
+              uses: wagoid/commitlint-github-action@v5.4.5
+              with:
+                configFile: .commitlintrc.js

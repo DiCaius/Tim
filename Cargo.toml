@@ -1,22 +1,20 @@
 [workspace]
-members = [ "lib/hkt", "lib/hkt_macro", "lib/pipe_macro", "lib/prelude", "packages/a"]
+members = ["lib/timrs_hkt_macro"]
 
 [workspace.dependencies]
-hkt = { path = "lib/hkt" }
-hkt_macro = { path = "lib/hkt_macro" }
-prelude = { path = "lib/prelude" }
+timrs_hkt_macro = {path = "lib/timrs_hkt_macro"}
 
 [workspace.lints.clippy]
-all = { level = "deny", priority = -2 }
-cargo = { level = "warn", priority = -1 }
-complexity = { level = "warn", priority = -1 }
-correctness = { level = "warn", priority = -1 }
-nursery = { level = "warn", priority = -1 }
-pedantic = { level = "warn", priority = -1 }
-perf = { level = "warn", priority = -1 }
-restriction = { level = "warn", priority = -1 }
-style = { level = "warn", priority = -1 }
-suspicious = { level = "warn", priority = -1 }
+all = {level = "deny", priority = -2}
+cargo = {level = "warn", priority = -1}
+complexity = {level = "warn", priority = -1}
+correctness = {level = "warn", priority = -1}
+nursery = {level = "warn", priority = -1}
+pedantic = {level = "warn", priority = -1}
+perf = {level = "warn", priority = -1}
+restriction = {level = "warn", priority = -1}
+style = {level = "warn", priority = -1}
+suspicious = {level = "warn", priority = -1}
 
 absolute_paths = "allow"
 blanket_clippy_restriction_lints = "allow"

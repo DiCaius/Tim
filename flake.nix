@@ -1,19 +1,11 @@
 {
-  description = "Direnv Configuration.";
-
+  description = "Development Shell.";
   inputs = {
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    };
-    flake-utils-plus = {
-      url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1";
-    };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-    };
+    flake-utils-plus = { url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixpkgs-unstable"; };
+    rust-overlay = { url = "github:oxalica/rust-overlay"; };
   };
-
-  outputs = { nixpkgs, flake-utils-plus, rust-overlay, ... }:
+  outputs = { flake-utils-plus, nixpkgs, rust-overlay, ... }:
     let
       pkgsForSystem = system: import nixpkgs {
         overlays = [ (import rust-overlay) ];
@@ -23,7 +15,7 @@
       let
         pkgs = pkgsForSystem system;
         rust-tools = (pkgs.rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
-          extensions = [ "rust-analyzer" "rust-src" "rustfmt-preview" "clippy-preview" ];
+          extensions = [ "clippy-preview" "rust-analyzer" "rust-src" "rustfmt-preview" ];
         }));
       in {
         devShells.default = pkgs.mkShell {
@@ -44,4 +36,3 @@
       }
     );
 }
-
