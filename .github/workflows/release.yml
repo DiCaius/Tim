@@ -60,6 +60,8 @@ jobs:
                 persist-credentials: false
                 submodules: recursive
                 token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Pull Released Changes
+              run: git pull
             - name: Install Rust Toolchain
               uses: actions-rust-lang/setup-rust-toolchain@v1
               with:
