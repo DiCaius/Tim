@@ -1,3 +1,10 @@
+## [1.0.0-rc.2](https://github.com/DiCaius/Tim.rs/compare/v1.0.0-rc.1...v1.0.0-rc.2) (2024-05-22)
+
+
+### :water_buffalo: UPDATES
+
+* Update release.yml. ([f1e09af](https://github.com/DiCaius/Tim.rs/commit/f1e09af8ae298123bad1dbc43c129503396e6e41))
+
 ## 1.0.0-rc.1 (2024-05-22)
 
 
