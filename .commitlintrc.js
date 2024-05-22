@@ -5,7 +5,7 @@ module.exports = {
   extends: '@commitlint/config-angular',
   ignores: [
     message =>
-        message ? /^release: \d+\.\d+\.\d+(-(development|release-candidate)\.\d+)?\./.test (message) :
+        message ? /^release: \d+\.\d+\.\d+(-(rc)\.\d+)?\./.test (message) :
         /* otherwise */ false,
   ],
   rules: {
