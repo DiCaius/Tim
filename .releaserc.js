@@ -48,7 +48,7 @@ module.exports = {
         },
     }],
     ['@semantic-release/git', {
-        assets: ['CHANGELOG.md', 'README.md', 'Cargo.lock', 'Cargo.toml'],
+        assets: ['**/CHANGELOG.md', '**/README.md', '**/Cargo.lock', '**/Cargo.toml'],
         message: 'release: ${nextRelease.version}.\n\n${nextRelease.notes}',
     }],
     ['@saithodev/semantic-release-backmerge', {
