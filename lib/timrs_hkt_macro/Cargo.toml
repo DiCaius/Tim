@@ -8,7 +8,7 @@ name = "timrs_hkt_macro"
 publish = true
 readme = "README.md"
 repository = "https://github.com/DiCaius/Tim.rs"
-version ="1.0.0-rc.4"
+version ="1.0.0-rc.5"
 
 [dependencies]
 proc-macro2 = {version = "1.0.83"}

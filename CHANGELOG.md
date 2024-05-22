@@ -1,3 +1,10 @@
+## [1.0.0-rc.5](https://github.com/DiCaius/Tim.rs/compare/v1.0.0-rc.4...v1.0.0-rc.5) (2024-05-22)
+
+
+### :water_buffalo: UPDATES
+
+* Ensure lockfiles are updated. ([b0a0491](https://github.com/DiCaius/Tim.rs/commit/b0a04914b5849ad05d7ce29760fced581b6f6044))
+
 ## [1.0.0-rc.4](https://github.com/DiCaius/Tim.rs/compare/v1.0.0-rc.3...v1.0.0-rc.4) (2024-05-22)
 
 

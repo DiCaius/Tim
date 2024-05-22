@@ -43,7 +43,7 @@ dependencies = [
 
 [[package]]
 name = "timrs_hkt_macro"
-version = "1.0.0-rc.4"
+version = "1.0.0-rc.5"
 dependencies = [
  "prettyplease",
  "proc-macro2",
