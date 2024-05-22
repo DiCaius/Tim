@@ -5,7 +5,7 @@ on:
             - release
             - release-candidate
 jobs:
-    job:
+    release:
         name: Release
         permissions:
             contents: write
@@ -48,3 +48,46 @@ jobs:
                     @semantic-release/release-notes-generator@13.0.0
                     conventional-changelog-conventionalcommits@5.0.0
                 semantic_version: 23.1.1
+    build:
+        name: Build Documentation
+        needs: release
+        runs-on: ubuntu-latest
+        steps:
+            - name: GitHub Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+                persist-credentials: false
+                submodules: recursive
+                token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Install Rust Toolchain
+              uses: actions-rust-lang/setup-rust-toolchain@v1
+              with:
+                toolchain: nightly
+            - name: Set-Up Cache
+              uses: Swatinem/rust-cache@v2
+            - name: Generate Documentation
+              run: RUSTDOCFLAGS="--enable-index-page -Zunstable-options" cargo doc --no-deps
+            - name: Setup pages
+              id: pages
+              uses: actions/configure-pages@v4
+            - name: Remove Lock File
+              run: rm target/doc/.lock
+            - name: Upload Pages
+              uses: actions/upload-pages-artifact@v3
+              with:
+                path: target/doc
+    deploy:
+        name: Deploy Documentation
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        needs: build
+        permissions:
+            pages: write
+            id-token: write
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v4
