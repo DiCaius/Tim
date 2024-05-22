@@ -40,7 +40,7 @@ jobs:
               uses: cycjimmy/semantic-release-action@v4.0.0
               with:
                 extra_plugins: |
-                    @saithodev/semantic-release-backmerge@4.0.1
+                    @saithodev/semantic-release-backmerge@2.1.2
                     @semantic-release/changelog@6.0.3
                     @semantic-release/commit-analyzer@12.0.0
                     @semantic-release/exec@6.0.3
@@ -66,6 +66,8 @@ jobs:
                 toolchain: nightly
             - name: Set-Up Cache
               uses: Swatinem/rust-cache@v2
+            - name: Clean Documentation Folder
+              run: cargo clean --doc
             - name: Generate Documentation
               run: RUSTDOCFLAGS="--enable-index-page -Zunstable-options" cargo doc --no-deps
             - name: Setup pages
