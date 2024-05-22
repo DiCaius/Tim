@@ -25,7 +25,7 @@ module.exports = {
         ],
     }],
     ['@semantic-release/exec', {
-        prepareCmd: 'semantic-release-rust prepare \${nextRelease.version}',
+        prepareCmd: 'semantic-release-rust prepare \${nextRelease.version} && cargo generate-lockfile',
         publishCmd: `
             cargo publish --allow-dirty --package timrs_hkt_macro
         `,
