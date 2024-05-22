@@ -1,3 +1,10 @@
+## [1.0.0-rc.3](https://github.com/DiCaius/Tim.rs/compare/v1.0.0-rc.2...v1.0.0-rc.3) (2024-05-22)
+
+
+### :water_buffalo: UPDATES
+
+* Update .releaserc.js. ([38cb983](https://github.com/DiCaius/Tim.rs/commit/38cb983e85754d464cf5b7a4feeea94493767a32))
+
 ## [1.0.0-rc.2](https://github.com/DiCaius/Tim.rs/compare/v1.0.0-rc.1...v1.0.0-rc.2) (2024-05-22)
 
 
