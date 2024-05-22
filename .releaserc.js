@@ -26,7 +26,9 @@ module.exports = {
     }],
     ['@semantic-release/exec', {
         prepareCmd: 'semantic-release-rust prepare \${nextRelease.version}',
-        publishCmd: 'semantic-release-rust publish',
+        publishCmd: `
+            cargo publish --allow-dirty --package timrs_hkt_macro
+        `,
         verifyConditionsCmd: 'semantic-release-rust verify-conditions',
     }],
     ['@semantic-release/release-notes-generator', {
@@ -46,7 +48,7 @@ module.exports = {
         },
     }],
     ['@semantic-release/git', {
-        assets: ['CHANGELOG.md', 'README.md', 'doc/**', 'package.json', 'pnpm-lock.yaml'],
+        assets: ['CHANGELOG.md', 'README.md', 'Cargo.lock', 'Cargo.toml'],
         message: 'release: ${nextRelease.version}.\n\n${nextRelease.notes}',
     }],
     ['@saithodev/semantic-release-backmerge', {

@@ -2,9 +2,10 @@
 categories = ["functional", "higher-kinded types", "procedural macro"]
 description = "Rust Higher-Kinded Types emulation procedural macros."
 edition = "2021"
-keywords = ["functional", "higher-kinded types", "procedural macro"]
+keywords = ["functional", "hkt", "procedural-macro"]
 license = "MIT"
 name = "timrs_hkt_macro"
+publish = true
 readme = "README.md"
 repository = "https://github.com/DiCaius/Tim.rs"
 version = "0.1.0"

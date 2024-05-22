@@ -1,5 +1,6 @@
 [workspace]
 members = ["lib/timrs_hkt_macro"]
+resolver = "2"
 
 [workspace.dependencies]
 timrs_hkt_macro = {path = "lib/timrs_hkt_macro"}
