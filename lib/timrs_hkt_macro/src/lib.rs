@@ -86,7 +86,7 @@ fn impl_hkt_derive(tokens: TokenStream2) -> TokenStream2 {
     })
 }
 
-/// Macro for defining a higher-kinded type of a specific arity.
+/// Macro for defining a Higher-Kinded Type of a specific arity.
 ///
 /// This macro will generate a public trait with the format:
 /// ```code
@@ -144,6 +144,8 @@ fn impl_hkt_derive(tokens: TokenStream2) -> TokenStream2 {
 pub fn hkt(tokens: TokenStream) -> TokenStream { impl_hkt(tokens.into()).into() }
 
 /// Macro for deriving implementations of [`crate::hkt!`].
+///
+/// Arity of the Higher-Kinded Type is automatically defined based on the implementing type arity.
 ///
 /// # Examples
 /// ```
