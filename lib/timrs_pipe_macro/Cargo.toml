@@ -2,20 +2,18 @@
 categories=["functional", "higher-kinded types", "procedural macro"]
 description="Rust Higher-Kinded Types emulation procedural macros."
 edition="2021"
-keywords=["functional", "hkt", "procedural-macro"]
+keywords=["functional", "pipe", "procedural-macro"]
 license="MIT"
-name="timrs_hkt_macro"
+name="timrs_pipe_macro"
 publish=true
 readme="README.md"
 repository="https://github.com/DiCaius/Tim.rs"
-version ="1.0.1-rc.1"
+version="1.0.1-rc.1"
 
 [dependencies]
 proc-macro2={version="1.0.83"}
 quote={version="1.0.36"}
 syn={version="2.0.63", features=["full"]}
-
-[dev-dependencies]
 timrs_macro_utils={workspace=true}
 
 [lib]
@@ -23,3 +21,4 @@ proc-macro=true
 
 [lints]
 workspace=true
+

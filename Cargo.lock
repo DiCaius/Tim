@@ -45,10 +45,30 @@ dependencies = [
 name = "timrs_hkt_macro"
 version = "1.0.1-rc.1"
 dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "timrs_macro_utils",
+]
+
+[[package]]
+name = "timrs_macro_utils"
+version = "0.1.0"
+dependencies = [
  "prettyplease",
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "timrs_pipe_macro"
+version = "1.0.1-rc.1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "timrs_macro_utils",
 ]
 
 [[package]]
