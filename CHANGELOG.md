@@ -1,3 +1,10 @@
+## [1.1.0-rc.4](https://github.com/DiCaius/Tim.rs/compare/v1.1.0-rc.3...v1.1.0-rc.4) (2024-05-28)
+
+
+### :water_buffalo: UPDATES
+
+* Update versions for `timrs_macro_utils`. ([b552841](https://github.com/DiCaius/Tim.rs/commit/b552841842bfd7de75b3956c2ffee39cc6b2a91a))
+
 ## [1.1.0-rc.3](https://github.com/DiCaius/Tim.rs/compare/v1.1.0-rc.2...v1.1.0-rc.3) (2024-05-28)
 
 
