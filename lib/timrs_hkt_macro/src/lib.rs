@@ -8,12 +8,11 @@ use syn::{
     parse2, DeriveInput, LitInt,
 };
 
-/// Structure defining parameters for the [`timrs_hkt_macro::hkt`] macro.
-struct HktInput {
+struct HktToken {
     arity: usize,
 }
 
-impl Parse for HktInput {
+impl Parse for HktToken {
     fn parse(input: ParseStream) -> SynResult<Self> {
         input
             .parse()
@@ -24,7 +23,7 @@ impl Parse for HktInput {
                 } else {
                     SynResult::Err(SynError::new(
                         input.span(),
-                        format!("Arity for a HKT must be of at least `1`: Got {arity:?}"),
+                        format!("Arity for a HKT must be of at least `1`: Got {arity}"),
                     ))
                 }
             })
@@ -32,7 +31,7 @@ impl Parse for HktInput {
 }
 
 fn impl_hkt(tokens: TokenStream2) -> TokenStream2 {
-    parse2::<HktInput>(tokens).map_or_else(SynError::into_compile_error, |input| {
+    parse2::<HktToken>(tokens).map_or_else(SynError::into_compile_error, |input| {
         let trait_name = format_ident!("HKT{}", input.arity);
         let mut trait_types = Vec::new();
         let mut trait_with_types = Vec::new();
@@ -186,36 +185,29 @@ pub fn hkt_derive(tokens: TokenStream) -> TokenStream { impl_hkt_derive(tokens.i
 
 #[cfg(test)]
 mod tests {
-    use prettyplease::unparse;
-    use proc_macro2::TokenStream as TokenStream2;
-    use std::str::FromStr;
-    use syn::{
-        parse::{Parse, Parser},
-        File,
-    };
-
-    use super::{impl_hkt, impl_hkt_derive};
-
-    fn pretty_print(tokens: TokenStream2) -> String { unparse(&File::parse.parse2(tokens).unwrap()) }
-    fn build_token(input: &str) -> TokenStream2 { TokenStream2::from_str(input).unwrap() }
-
     #[test]
     fn hkt_should_create_trait_for_zero_arity() {
-        let input = "0";
-        let expected = "::core::compile_error! {\n    \"Arity for a HKT must be of at least `1`: Got 0\"\n}\n";
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
 
-        let output = impl_hkt(build_token(input));
+        use super::impl_hkt;
+
+        let expected = "::core::compile_error! {\"Arity for a HKT must be of at least `1`: Got 0\"}";
+        let input = "0";
+        let output = impl_hkt(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing zero arity Higher-Kinded Types"
         );
     }
 
     #[test]
     fn hkt_should_create_trait_for_unary() {
-        let input = "1";
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt;
+
         let expected = r###"
             pub trait HKT1 {
                 type T1;
@@ -225,19 +217,22 @@ mod tests {
                     + HKT1<With<_T1> = Self::With<_T1>>;
             }
         "###;
-
-        let output = impl_hkt(build_token(input));
+        let input = "1";
+        let output = impl_hkt(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing unary Higher-Kinded Types"
         );
     }
 
     #[test]
     fn hkt_should_create_trait_for_higher_arity() {
-        let input = "2";
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt;
+
         let expected = r###"
             pub trait HKT2 {
                 type T1;
@@ -248,145 +243,163 @@ mod tests {
                     + HKT2<With<_T1, _T2> = Self::With<_T1, _T2>>;
             }
         "###;
-
-        let output = impl_hkt(build_token(input));
+        let input = "2";
+        let output = impl_hkt(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing higher arity Higher-Kinded Types"
         );
     }
 
     #[test]
     fn hkt_should_fail_if_arity_is_invalid() {
-        let output_not_provided = impl_hkt(build_token(""));
-        let output_float = impl_hkt(build_token("2.2"));
-        let output_ident = impl_hkt(build_token("A"));
-        let output_string = impl_hkt(build_token("\"A\""));
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt;
+
+        let output_not_provided = impl_hkt(build_tokens(""));
+        let output_float = impl_hkt(build_tokens("2.2"));
+        let output_ident = impl_hkt(build_tokens("A"));
+        let output_string = impl_hkt(build_tokens("\"A\""));
 
         assert_eq!(
             pretty_print(output_not_provided),
-            "::core::compile_error! {\n    \"unexpected end of input, expected integer literal\"\n}\n",
+            pretty_print(build_tokens(
+                "::core::compile_error! {\"unexpected end of input, expected integer literal\"}"
+            )),
             "Testing failures for Higher-Kinded Types with no arity provided"
         );
+
         assert_eq!(
             pretty_print(output_float),
-            "::core::compile_error! {\n    \"expected integer literal\"\n}\n",
+            pretty_print(build_tokens("::core::compile_error! {\"expected integer literal\"}")),
             "Testing failures for Higher-Kinded Types with improper arity: Float"
         );
+
         assert_eq!(
             pretty_print(output_ident),
-            "::core::compile_error! {\n    \"expected integer literal\"\n}\n",
+            pretty_print(build_tokens("::core::compile_error! {\"expected integer literal\"}")),
             "Testing failures for Higher-Kinded Types with improper arity: Ident"
         );
         assert_eq!(
             pretty_print(output_string),
-            "::core::compile_error! {\n    \"expected integer literal\"\n}\n",
+            pretty_print(build_tokens("::core::compile_error! {\"expected integer literal\"}")),
             "Testing failures for Higher-Kinded Types with improper arity: String"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_unary() {
-        let input = r###"
-            enum HKT<A> {
-                T1(A)
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A> HKT1 for HKT<A> {
                 type T1 = A;
                 type With<_T1> = HKT<_T1>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A> {
+                T1(A)
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing unary Higher-Kinded Types derivation"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_unary_with_bounds() {
-        let input = r###"
-            enum HKT<A: Sized> {
-                T1(A)
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A: Sized> HKT1 for HKT<A> {
                 type T1 = A;
                 type With<_T1: Sized> = HKT<_T1>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A: Sized> {
+                T1(A)
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing unary Higher-Kinded Types derivation with bounds"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_unary_with_where_clause() {
-        let input = r###"
-            enum HKT<A> where A: Sized {
-                T1(A)
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A> HKT1 for HKT<A> where A: Sized {
                 type T1 = A;
                 type With<_T1> = HKT<_T1>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A> where A: Sized {
+                T1(A)
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing unary Higher-Kinded Types derivation with where clause"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_unary_with_bounds_and_where_clause() {
-        let input = r###"
-            enum HKT<A: Copy> where A: Sized {
-                T1(A)
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A: Copy> HKT1 for HKT<A> where A: Sized {
                 type T1 = A;
                 type With<_T1: Copy> = HKT<_T1>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A: Copy> where A: Sized {
+                T1(A)
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing unary Higher-Kinded Types derivation with bounds and where clause"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_higher_arity() {
-        let input = r###"
-            enum HKT<A, B> {
-                T1(A),
-                T2(B),
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A, B> HKT2 for HKT<A, B> {
                 type T1 = A;
@@ -394,24 +407,27 @@ mod tests {
                 type With<_T1, _T2> = HKT<_T1, _T2>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A, B> {
+                T1(A),
+                T2(B),
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing higher arity Higher-Kinded Types derivation"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_higher_arity_with_bounds() {
-        let input = r###"
-            enum HKT<A: Sized, B: Sized> {
-                T1(A),
-                T2(B),
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A: Sized, B: Sized> HKT2 for HKT<A, B> {
                 type T1 = A;
@@ -419,24 +435,27 @@ mod tests {
                 type With<_T1: Sized, _T2: Sized> = HKT<_T1, _T2>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A: Sized, B: Sized> {
+                T1(A),
+                T2(B),
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing higher arity Higher-Kinded Types derivation with bounds"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_higher_arity_with_where_clause() {
-        let input = r###"
-            enum HKT<A, B> where A: Sized, B: Sized {
-                T1(A),
-                T2(B),
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A, B> HKT2 for HKT<A, B> where A: Sized, B: Sized {
                 type T1 = A;
@@ -444,24 +463,27 @@ mod tests {
                 type With<_T1, _T2> = HKT<_T1, _T2>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A, B> where A: Sized, B: Sized {
+                T1(A),
+                T2(B),
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing higher arity Higher-Kinded Types derivation with where clause"
         );
     }
 
     #[test]
     fn hkt_derive_should_implement_hkt_trait_for_higher_arity_with_bounds_and_where_clause() {
-        let input = r###"
-            enum HKT<A: Copy, B: Copy> where A: Sized, B: Sized {
-                T1(A),
-                T2(B),
-            }
-        "###;
+        use timrs_macro_utils::test::{build_tokens, pretty_print};
+
+        use super::impl_hkt_derive;
+
         let expected = r###"
             impl<A: Copy, B: Copy> HKT2 for HKT<A, B> where A: Sized, B: Sized {
                 type T1 = A;
@@ -469,12 +491,17 @@ mod tests {
                 type With<_T1: Copy, _T2: Copy> = HKT<_T1, _T2>;
             }
         "###;
-
-        let output = impl_hkt_derive(build_token(input));
+        let input = r###"
+            enum HKT<A: Copy, B: Copy> where A: Sized, B: Sized {
+                T1(A),
+                T2(B),
+            }
+        "###;
+        let output = impl_hkt_derive(build_tokens(input));
 
         assert_eq!(
             pretty_print(output),
-            pretty_print(build_token(expected)),
+            pretty_print(build_tokens(expected)),
             "Testing higher arity Higher-Kinded Types derivation with bounds and where clause"
         );
     }

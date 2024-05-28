@@ -15,7 +15,9 @@ module.exports = {
     'footer-leading-blank': [ERROR_CODE, 'always'],
     'header-max-length': [ERROR_CODE, 'always', HEADER_MAX_LENGTH],
     'scope-enum': [ERROR_CODE, 'always', [
-        'lib/hkt_macro',
+        'lib timrs_hkt_macro',
+        'lib timrs_pipe_macro',
+        'private timrs_macro_utils',
     ]],
     'subject-case': [ERROR_CODE, 'always', 'sentence-case'],
     'subject-full-stop': [ERROR_CODE, 'always', '.'],
