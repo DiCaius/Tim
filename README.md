@@ -8,6 +8,7 @@ Tim.rs is a collection of Rust libraries focused on functional programming. It p
 
 ## Table of Contents
 - [HKT Macro](./lib/timrs_hkt_macro/README.md)
+- [Pipe Macro](./lib/timrs_pipe_macro/README.md)
 
 ## Documentation
 [Documentation for all crates in the project](https://dicaius.github.io/Tim.rs/index.html)
