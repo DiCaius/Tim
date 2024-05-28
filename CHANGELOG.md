@@ -1,3 +1,10 @@
+## [1.1.0-rc.1](https://github.com/DiCaius/Tim.rs/compare/v1.0.1-rc.1...v1.1.0-rc.1) (2024-05-28)
+
+
+### :sparkles: FEATURE
+
+* **lib timrs_pipe_macro:** Adds `timrs_pipe_macro` ([#2](https://github.com/DiCaius/Tim.rs/issues/2)). ([058aeef](https://github.com/DiCaius/Tim.rs/commit/058aeef48e16030a17c10609c7c478a6c4f08dc8))
+
 ## [1.0.1-rc.1](https://github.com/DiCaius/Tim.rs/compare/v1.0.0...v1.0.1-rc.1) (2024-05-22)
 
 

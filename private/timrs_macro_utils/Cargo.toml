@@ -8,7 +8,7 @@ name="timrs_macro_utils"
 publish=false
 readme="README.md"
 repository="https://github.com/DiCaius/Tim.rs"
-version="0.1.0"
+version="1.1.0-rc.1"
 
 [dependencies]
 proc-macro2={version="1.0.83"}
