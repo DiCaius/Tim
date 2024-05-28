@@ -16,7 +16,7 @@ quote={version="1.0.36"}
 syn={version="2.0.63", features=["full"]}
 
 [dev-dependencies]
-timrs_macro_utils={workspace=true}
+timrs_macro_utils={version="1.1.0-rc.4", workspace=true}
 
 [lib]
 proc-macro=true
