@@ -1,11 +1,11 @@
 [workspace]
-members=["lib/timrs_hkt_macro", "lib/timrs_pipe_macro", "private/timrs_macro_utils"]
+members=["lib/timrs_hkt_macro", "lib/timrs_macro_utils", "lib/timrs_pipe_macro"]
 resolver="2"
 
 [workspace.dependencies]
 timrs_hkt_macro={path="lib/timrs_hkt_macro"}
+timrs_macro_utils={path="lib/timrs_macro_utils"}
 timrs_pipe_macro={path="lib/timrs_pipe_macro"}
-timrs_macro_utils={path="private/timrs_macro_utils"}
 
 [workspace.lints.clippy]
 all={level="deny", priority=-2}
