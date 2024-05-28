@@ -1,6 +1,6 @@
 [package]
 categories=["functional", "higher-kinded types", "procedural macro"]
-description="Rust Higher-Kinded Types emulation procedural macros."
+description="Procedural macro providing Elixir-style pipe operators for function composition."
 edition="2021"
 keywords=["functional", "pipe", "procedural-macro"]
 license="MIT"

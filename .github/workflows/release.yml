@@ -37,10 +37,10 @@ jobs:
                 GIT_COMMITTER_EMAIL: 'am@scream.com'
                 GIT_COMMITTER_NAME: 'AM'
                 GITHUB_TOKEN: ${{ secrets.AM_GITHUB_TOKEN }}
-              uses: cycjimmy/semantic-release-action@v4.0.0
+              uses: cycjimmy/semantic-release-action@v4.1.0
               with:
                 extra_plugins: |
-                    @saithodev/semantic-release-backmerge@3.0.0
+                    @saithodev/semantic-release-backmerge@4.0.1
                     @semantic-release/changelog@6.0.3
                     @semantic-release/commit-analyzer@12.0.0
                     @semantic-release/exec@6.0.3
