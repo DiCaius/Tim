@@ -1,3 +1,15 @@
+## [1.1.0-rc.2](https://github.com/DiCaius/Tim.rs/compare/v1.1.0-rc.1...v1.1.0-rc.2) (2024-05-28)
+
+
+### :vertical_traffic_light: CONTINUOUS INTEGRATION
+
+* Update .releaserc.js. ([6280ff5](https://github.com/DiCaius/Tim.rs/commit/6280ff5a36ca2af1cf3af61d025e348bb463c6d8))
+
+
+### :water_buffalo: UPDATES
+
+* Update README.md. ([77bb90e](https://github.com/DiCaius/Tim.rs/commit/77bb90e078660369d07401208cbc8af93dbbc673))
+
 ## [1.1.0-rc.1](https://github.com/DiCaius/Tim.rs/compare/v1.0.1-rc.1...v1.1.0-rc.1) (2024-05-28)
 
 
