@@ -1,3 +1,10 @@
+## [1.1.0-rc.5](https://github.com/DiCaius/Tim.rs/compare/v1.1.0-rc.4...v1.1.0-rc.5) (2024-05-28)
+
+
+### :water_buffalo: UPDATES
+
+* Fix release. ([0b82134](https://github.com/DiCaius/Tim.rs/commit/0b82134c6ea705fdb18418afb632b0b98b4206f9))
+
 ## [1.1.0-rc.4](https://github.com/DiCaius/Tim.rs/compare/v1.1.0-rc.3...v1.1.0-rc.4) (2024-05-28)
 
 
