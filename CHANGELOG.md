@@ -1,3 +1,10 @@
+## [1.1.0-rc.6](https://github.com/DiCaius/Tim.rs/compare/v1.1.0-rc.5...v1.1.0-rc.6) (2024-05-28)
+
+
+### :bug: FIX
+
+* Fix `timrs_pipe_macro` crate description. ([f3dda18](https://github.com/DiCaius/Tim.rs/commit/f3dda18dd50210cb3352a50bd077dac9b0a31608))
+
 ## [1.1.0-rc.5](https://github.com/DiCaius/Tim.rs/compare/v1.1.0-rc.4...v1.1.0-rc.5) (2024-05-28)
 
 
